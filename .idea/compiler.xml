@@ -17,11 +17,13 @@
         </processorPath>
         <module name="bank_rest-main" />
         <module name="bankcards" />
+        <module name="bankREST" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bankREST" options="-parameters" />
       <module name="bank_rest-main" options="-parameters" />
       <module name="bankcards" options="-parameters" />
     </option>
