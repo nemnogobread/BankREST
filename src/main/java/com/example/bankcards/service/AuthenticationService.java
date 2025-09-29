@@ -4,13 +4,12 @@ import com.example.bankcards.entity.Role;
 import com.example.bankcards.entity.User;
 import com.example.bankcards.repository.UserRepository;
 import com.example.bankcards.security.JwtService;
-import com.example.bankcards.util.AuthenticationRequest;
-import com.example.bankcards.util.AuthenticationResponse;
-import com.example.bankcards.util.RegisterRequest;
+import com.example.bankcards.dto.requests.AuthenticationRequest;
+import com.example.bankcards.dto.responses.AuthenticationResponse;
+import com.example.bankcards.dto.requests.UserRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(UserRegisterRequest request) {
         User user = User.builder()
                 .email(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))

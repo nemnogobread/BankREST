@@ -1,4 +1,4 @@
-package com.example.bankcards.util;
+package com.example.bankcards.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-    private String token;
+public class BankCardResponse {
+    private String message;
 }

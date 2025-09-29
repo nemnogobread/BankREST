@@ -1,4 +1,4 @@
-package com.example.bankcards.util;
+package com.example.bankcards.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class UserRegisterRequest {
     private String username;
     private String password;
 }

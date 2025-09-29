@@ -1,11 +1,10 @@
 package com.example.bankcards.controller;
 
 import com.example.bankcards.service.AuthenticationService;
-import com.example.bankcards.util.AuthenticationRequest;
-import com.example.bankcards.util.AuthenticationResponse;
-import com.example.bankcards.util.RegisterRequest;
+import com.example.bankcards.dto.requests.AuthenticationRequest;
+import com.example.bankcards.dto.responses.AuthenticationResponse;
+import com.example.bankcards.dto.requests.UserRegisterRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,11 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService service;
+
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+            @RequestBody UserRegisterRequest request
     ) {
-        return  ResponseEntity.ok(service.register(request));
+        return ResponseEntity.ok(service.register(request));
     }
 
     @PostMapping("/authenticate")

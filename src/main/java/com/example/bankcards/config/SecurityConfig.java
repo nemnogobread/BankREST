@@ -22,11 +22,12 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/v1/auth/**").permitAll() // Allow all requests
+                        .requestMatchers("/api/v1/auth/**",
+                                "/api/v1/cards/**").permitAll() // Allow all requests
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .sessionManagement(session -> session

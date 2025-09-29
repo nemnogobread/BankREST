@@ -20,7 +20,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     // TODO: make SECRET_KEY safe and move finals to env
-    private static final String SECRET_KEY = "61ab6d26ada66bc7cacf7165eadcb0f1e4275f1c25fb4922f8f89d472a30f761";
+    private static final String SECRET_KEY = "cd79801c1fdc2c544f2dd7189ef352e18041ae6e43fa555a9922f12ab315d255";
     private static final Integer TOKEN_DURATION = 1000 * 60 * 60 * 24;  // 24 hours in milliseconds
 
     public String extractUsername(String token) {
@@ -59,7 +59,7 @@ public class JwtService {
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + TOKEN_DURATION))
-                .signWith(getSigningKey())
+                .signWith(getSigningKey(), Jwts.SIG.HS256)
                 .compact();
     }
 
