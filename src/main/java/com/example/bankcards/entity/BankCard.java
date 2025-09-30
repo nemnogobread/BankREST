@@ -3,6 +3,9 @@ package com.example.bankcards.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+
 @Builder
 @Getter
 @Setter
@@ -24,6 +27,7 @@ public class BankCard {
     @Column
     private String expiryDate;
 
+    @Enumerated(EnumType.STRING)
     @Column
     private Status status;
 
@@ -33,5 +37,25 @@ public class BankCard {
     public String getMaskedCardNumber() {
         String lastFour = cardNumber.substring(cardNumber.length() - 4);
         return "**** **** **** " + lastFour;
+    }
+
+    @Transient // This field is not persisted in DB
+    public boolean isExpired() {
+        try {
+            YearMonth expiry = YearMonth.parse(expiryDate, DateTimeFormatter.ofPattern("MM/yy"));
+            return expiry.isBefore(YearMonth.now());
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void updateStatus() {
+        if (isExpired()) {
+            this.status = Status.OUT_OF_DATE;
+        } else if (this.status == null) {
+            this.status = Status.ACTIVE;
+        }
     }
 }
