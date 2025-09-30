@@ -5,7 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface BankCardRepository extends JpaRepository<BankCard, Integer> {
-    public boolean existsByCardNumber(String cardNumber);
+
+    public Optional<BankCard> findByCardNumber(String cardNumber);
+
+    public void deleteByCardNumber(String cardNumber);
 }
