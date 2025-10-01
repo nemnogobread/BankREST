@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping(path = "/become-admin", consumes = "application/json", produces = "application/json")
+    //TODO: update authorities if user after becoming an ADMIN
+    @PostMapping("/become-admin")
     public ResponseEntity<BecomeAdminResponse> becomeAdmin(
             @RequestBody BecomeAdminRequest request
     ) {

@@ -12,6 +12,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class BankCardService {
@@ -41,11 +43,13 @@ public class BankCardService {
     }
 
     public MessageResponse changeCardStatus(BankCardNumberRequest request, Status status) {
-        if (bankCardRepository.findByCardNumber(request.getCardNumber()).isEmpty()) {
+        Optional<BankCard> optionalBankCard = bankCardRepository.findByCardNumber(request.getCardNumber());
+
+        if (optionalBankCard.isEmpty()) {
             throw new EntityNotFoundException("Card with this number does not exist!");
         }
 
-        BankCard bankCard = bankCardRepository.findByCardNumber(request.getCardNumber()).get();
+        BankCard bankCard = optionalBankCard.get();
         bankCard.setStatus(status);
         bankCardRepository.save(bankCard);
         return MessageResponse.builder()
@@ -54,11 +58,13 @@ public class BankCardService {
     }
 
     public MessageResponse deleteCard(BankCardNumberRequest request) {
-        if (bankCardRepository.findByCardNumber(request.getCardNumber()).isEmpty()) {
+        Optional<BankCard> optionalBankCard = bankCardRepository.findByCardNumber(request.getCardNumber());
+
+        if (optionalBankCard.isEmpty()) {
             throw new EntityNotFoundException("Card with this number does not exist!");
         }
 
-        bankCardRepository.deleteByCardNumber(request.getCardNumber());
+        bankCardRepository.delete(optionalBankCard.get());
 
         return MessageResponse.builder()
                 .message("Card was deleted")

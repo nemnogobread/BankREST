@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/cards")
+@RequestMapping("/api/v1/admin/cards")
 @RequiredArgsConstructor
-public class BankCardController {
+public class AdminBankCardController {
     private final BankCardService bankCardService;
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("/create")
     public ResponseEntity<BankCardResponse> createCard(
             @RequestBody BankCardCreateRequest request
@@ -28,7 +27,6 @@ public class BankCardController {
         return ResponseEntity.ok(bankCardService.createCard(request));
     }
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("/block")
     public ResponseEntity<MessageResponse> blockCard(
             @RequestBody BankCardNumberRequest request
@@ -36,7 +34,6 @@ public class BankCardController {
         return ResponseEntity.ok(bankCardService.changeCardStatus(request, Status.BLOCKED));
     }
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("/activate")
     public ResponseEntity<MessageResponse> activateCard(
             @RequestBody BankCardNumberRequest request
@@ -44,7 +41,6 @@ public class BankCardController {
         return ResponseEntity.ok(bankCardService.changeCardStatus(request, Status.ACTIVE));
     }
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("/delete")
     public ResponseEntity<MessageResponse> deleteCard(
             @RequestBody BankCardNumberRequest request
